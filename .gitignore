@@ -1,0 +1,69 @@
+# Environment variables (IMPORTANT - Never commit these!)
+.env
+*.env
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+docker-compose.override.yml
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+
+# Backup files
+backups/
+*.sql
+
+# Node modules (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.angular/
+
+# Maven (backend-spring)
+backend/back-spring/target/
+backend/back-spring/.mvn/
+backend/back-spring/mvnw
+backend/back-spring/mvnw.cmd
+
+# Python (backend-python)
+backend/back-python/__pycache__/
+backend/back-python/*.pyc
+backend/back-python/*.pyo
+backend/back-python/*.pyd
+backend/back-python/.pytest_cache/
+backend/back-python/venv/
+backend/back-python/.venv/
+
+# Monitoring data (local)
+monitoring/prometheus/data/
+monitoring/grafana/data/
+
+# Kubernetes secrets (if you create local copies)
+k8s/*-secret.yaml
+!k8s/mysql-deployment.yaml
+!k8s/backend-spring-deployment.yaml
+!k8s/backend-python-deployment.yaml
+
+# Keep these files
+!.gitignore
+!.env.example

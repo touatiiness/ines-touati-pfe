@@ -1,0 +1,26 @@
+<div class="viewer-container">
+  <!-- En-tête avec titre du cours et bouton retour -->
+  <div class="header">
+    <button class="back-button" (click)="goBackToOptions()">
+      ← Retour
+    </button>
+    <h2>{{ showVideo ? '📺' : '📚' }} Cours {{ courseNumber }} - Partie {{ partNumber }}</h2>
+  </div>
+
+  <!-- Viewer VIDEO en plein écran -->
+  <div class="video-viewer" *ngIf="showVideo && fileUrl">
+    <video [src]="fileUrl" controls autoplay>
+      Votre navigateur ne supporte pas la lecture de vidéos.
+    </video>
+  </div>
+
+  <!-- Viewer PDF en plein écran -->
+  <div class="pdf-viewer" *ngIf="!showVideo && fileUrl">
+    <iframe [src]="fileUrl" frameborder="0"></iframe>
+  </div>
+
+  <!-- Message si aucun fichier -->
+  <div class="no-file" *ngIf="!fileUrl">
+    <p>{{ showVideo ? 'Aucune vidéo disponible pour cette partie' : 'Aucun fichier PDF disponible pour cette partie' }}</p>
+  </div>
+</div>

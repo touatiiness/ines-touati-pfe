@@ -1,0 +1,54 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<div class="container">
+	
+	<div class="row text-center">
+	    <div class="col-md-6 offset-md-3">
+	        <div class="card">
+	            <div class="card-body">
+	                <div >
+	                    <img src="../../assets/img/logo3.png" [width]="200">
+	                </div>
+	                <div class="login-title">
+	                    <h4>Inscription</h4>
+	                </div>
+	                <div class="login-form mt-4">
+	                    <form [formGroup]="loginForm">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                              <input  id="email" name="Full Name" formControlName="nom" placeholder="Nom" class="form-control" type="text">
+                            </div>
+                            <div class="form-group col-md-12">
+                              <input type="pass" class="form-control" formControlName="prenom" id="pass" placeholder="Prenom">
+                            </div>
+                            <div class="form-group col-md-12">
+                                <input  id="email" name="Full Name" formControlName="email" placeholder="Email Address" class="form-control" type="text">
+                              </div>
+                              <div class="form-group col-md-12">
+                                <input type="pass" class="form-control" formControlName="password" id="pass" placeholder="Password">
+                              </div>  
+                              <div class="form-group col-md-12">
+                                <input  id="email" name="Full Name" formControlName="numtel" placeholder="Numéro téléphone" class="form-control" type="number">
+                              </div>
+                              <div class="form-group col-md-12">
+                                <input type="pass" class="form-control" formControlName="classe" id="pass" placeholder="classe">
+                              </div>
+                          </div>
+                         <div class="form-row">
+                       
+                    </div>                        
+                        
+                        <div class="form-row">
+                            <button type="button" (click)="enregistrer()" class="btn btn-danger btn-block">Enregistrer</button>
+                        </div>
+                    </form>
+	                </div>
+	            
+	            </div>
+	        </div>
+	    </div>
+	</div>
+</div>

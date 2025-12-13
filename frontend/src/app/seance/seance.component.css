@@ -1,0 +1,659 @@
+.img-course {
+  width: 250px;
+  height: 300px;
+  object-fit: contain;
+  background-color: #f8f9fa;
+}
+
+/* Section des boutons de cours */
+.courses-buttons-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.header-section {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: fadeInDown 0.8s ease;
+}
+
+.section-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.section-subtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 300;
+}
+
+/* Grille des cours */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Boutons de cours */
+.course-btn {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 40px 30px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.course-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.course-btn:hover::before {
+  left: 100%;
+}
+
+.course-btn:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.course-number {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.8;
+}
+
+.course-btn h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.course-description {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+  text-align: center;
+  padding: 0 15px;
+  max-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.course-btn:hover .course-description {
+  color: white;
+}
+
+.course-arrow {
+  font-size: 2rem;
+  color: #667eea;
+  transition: transform 0.3s ease;
+}
+
+.course-btn:hover .course-arrow {
+  transform: translateX(10px);
+}
+
+/* Couleurs spécifiques pour chaque cours */
+.course-1:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.course-2:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.course-3:hover {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.course-4:hover {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+.course-5:hover {
+  background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.course-btn:hover h3,
+.course-btn:hover .course-number,
+.course-btn:hover .course-arrow {
+  color: white;
+  -webkit-text-fill-color: white;
+}
+
+/* Animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Animation pour les boutons */
+.course-btn {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.course-btn:nth-child(1) { animation-delay: 0.1s; }
+.course-btn:nth-child(2) { animation-delay: 0.2s; }
+.course-btn:nth-child(3) { animation-delay: 0.3s; }
+.course-btn:nth-child(4) { animation-delay: 0.4s; }
+.course-btn:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Section des parties (Part 1-7) */
+.parts-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.parts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 25px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.part-btn {
+  background: white;
+  border: none;
+  border-radius: 15px;
+  padding: 25px 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+  min-height: 150px;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.part-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.part-btn:hover::before {
+  left: 100%;
+}
+
+.part-btn:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.part-number {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #667eea;
+  transition: color 0.3s ease;
+}
+
+.part-btn:hover .part-number {
+  color: white;
+}
+
+.part-arrow {
+  font-size: 1.5rem;
+  color: #667eea;
+  transition: all 0.3s ease;
+}
+
+.part-btn:hover .part-arrow {
+  color: white;
+  transform: translateX(5px);
+}
+
+.part-title {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  line-height: 1.4;
+  max-width: 100%;
+  transition: color 0.3s ease;
+}
+
+.part-btn:hover .part-title {
+  color: white;
+}
+
+/* Animation pour les boutons de parts */
+.part-btn {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.part-btn:nth-child(1) { animation-delay: 0.1s; }
+.part-btn:nth-child(2) { animation-delay: 0.15s; }
+.part-btn:nth-child(3) { animation-delay: 0.2s; }
+.part-btn:nth-child(4) { animation-delay: 0.25s; }
+.part-btn:nth-child(5) { animation-delay: 0.3s; }
+.part-btn:nth-child(6) { animation-delay: 0.35s; }
+.part-btn:nth-child(7) { animation-delay: 0.4s; }
+
+/* Section des options (Cours, Quiz, AI) */
+.options-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.back-btn {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 30px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: white;
+  color: #667eea;
+  transform: translateX(-5px);
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.option-btn {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 50px 30px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.option-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.option-btn:hover::before {
+  left: 100%;
+}
+
+.option-btn:hover {
+  transform: translateY(-15px) scale(1.05);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.option-icon {
+  font-size: 4rem;
+  margin-bottom: 10px;
+}
+
+.option-btn h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.option-btn p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  text-align: center;
+}
+
+/* Couleurs spécifiques pour chaque option */
+.option-cours:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.option-quiz:hover {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.option-ai:hover {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.option-btn:hover h3,
+.option-btn:hover p {
+  color: white;
+}
+
+/* Animation pour les options */
+.option-btn {
+  animation: fadeInUp 0.6s ease forwards;
+  opacity: 0;
+}
+
+.option-btn:nth-child(1) { animation-delay: 0.1s; }
+.option-btn:nth-child(2) { animation-delay: 0.2s; }
+.option-btn:nth-child(3) { animation-delay: 0.3s; }
+
+/* Bouton Recommandations */
+.recommendations-btn {
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 40px 50px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  overflow: hidden;
+  max-width: 400px;
+}
+
+.recommendations-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.recommendations-btn:hover::before {
+  left: 100%;
+}
+
+.recommendations-btn:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.recommendations-btn:hover h3,
+.recommendations-btn:hover p {
+  color: white;
+}
+
+.recommendations-btn h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+}
+
+.recommendations-btn p {
+  font-size: 1rem;
+  color: #666;
+  margin: 0;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .courses-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .course-btn {
+    padding: 30px 20px;
+  }
+
+  .parts-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .part-btn {
+    padding: 25px 15px;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .option-btn {
+    padding: 40px 20px;
+  }
+
+  .recommendations-btn {
+    padding: 30px 20px;
+    max-width: 100%;
+  }
+}
+.part-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  margin: 0;
+  line-height: 1.4;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+
+/* Bouton AI Assistant Global */
+.global-ai-button-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.global-ai-btn {
+  width: 100%;
+  background: white;
+  border: none;
+  border-radius: 20px;
+  padding: 30px 40px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  position: relative;
+  overflow: hidden;
+}
+
+.global-ai-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.global-ai-btn:hover::before {
+  left: 100%;
+}
+
+.global-ai-btn:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.ai-icon {
+  font-size: 4rem;
+  flex-shrink: 0;
+}
+
+.ai-content {
+  flex: 1;
+  text-align: left;
+}
+
+.ai-content h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 10px 0;
+  transition: color 0.3s ease;
+}
+
+.ai-content p {
+  font-size: 1.1rem;
+  color: #666;
+  margin: 0;
+  transition: color 0.3s ease;
+}
+
+.global-ai-btn:hover .ai-content h3,
+.global-ai-btn:hover .ai-content p {
+  color: white;
+}
+
+.ai-arrow {
+  font-size: 2.5rem;
+  color: #667eea;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.global-ai-btn:hover .ai-arrow {
+  color: white;
+  transform: scale(1.2);
+}
+
+/* Animation pour le bouton AI global */
+.global-ai-btn {
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+/* Section AI Assistant */
+.ai-assistant-section {
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+.ai-assistant-section .container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .global-ai-btn {
+    flex-direction: column;
+    text-align: center;
+    padding: 30px 20px;
+  }
+
+  .ai-content {
+    text-align: center;
+  }
+
+  .ai-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .ai-content p {
+    font-size: 1rem;
+  }
+
+  .ai-icon {
+    font-size: 3rem;
+  }
+
+  .ai-arrow {
+    font-size: 2rem;
+  }
+}

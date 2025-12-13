@@ -1,0 +1,37 @@
+
+<header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" >
+        <h4 class="sitename">NEXT LEARN</h4>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a routerLink="acceuil" class="active">Home<br></a></li>
+          <li><a routerLink="About">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li *ngIf="this.token!=null"><a href="courses.html">Utilisateur</a></li>
+          <li *ngIf="this.token!=null"><a routerLink="Presence">Presence</a></li>
+          <li *ngIf="this.token!=null"><a routerLink="Cours">Cours</a></li>
+
+          <li><a href="trainers.html">Trainers</a></li>
+      
+          <li><a href="contact.html">Contact</a></li>
+          <button (click)="deconnexion()" *ngIf="this.token!=null" type="button" class="btn btn-danger">Deconnexion</button>
+          <a routerLink="login" *ngIf="this.token==null" type="button" class="btn btn-danger">Connexion</a>
+
+        </ul>
+
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+

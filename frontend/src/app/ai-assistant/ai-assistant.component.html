@@ -1,0 +1,57 @@
+<div class="ai-chat-container">
+  <div class="chat-header" *ngIf="!globalMode">
+    <button class="back-button" (click)="goBackToOptions()">
+      ← Retour
+    </button>
+    <h2>🤖 AI Assistant - Cours {{ courseNumber }} - Partie {{ partNumber }}</h2>
+    <p>Posez vos questions et obtenez de l'aide personnalisée</p>
+  </div>
+  <div class="chat-header" *ngIf="globalMode">
+    <h2>🤖 AI Assistant Global</h2>
+    <p>Posez vos questions sur tous les cours de programmation C</p>
+  </div>
+
+  <div class="chat-messages" #chatMessages>
+    <div *ngFor="let message of messages"
+         class="message"
+         [ngClass]="message.role === 'user' ? 'message-user' : 'message-assistant'">
+      <div class="message-icon">
+        {{ message.role === 'user' ? '👤' : '🤖' }}
+      </div>
+      <div class="message-content">
+        <div class="message-text">{{ message.content }}</div>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="message message-assistant">
+      <div class="message-icon">🤖</div>
+      <div class="message-content">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    ⚠️ {{ errorMessage }}
+  </div>
+
+  <div class="chat-input-container">
+    <textarea
+      [(ngModel)]="userInput"
+      (keypress)="onKeyPress($event)"
+      placeholder="Tapez votre question ici... (Appuyez sur Entrée pour envoyer)"
+      class="chat-input"
+      rows="3"></textarea>
+    <button
+      (click)="sendMessage()"
+      [disabled]="!userInput.trim() || isLoading"
+      class="send-button">
+      <span *ngIf="!isLoading">Envoyer ➤</span>
+      <span *ngIf="isLoading">Envoi...</span>
+    </button>
+  </div>
+</div>

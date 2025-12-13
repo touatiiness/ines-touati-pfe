@@ -1,0 +1,84 @@
+<div class="quiz-container">
+  <div class="quiz-header">
+    <button class="back-button" (click)="goBackToOptions()">
+      ← Retour
+    </button>
+    <h2>📝 Quiz IA - Cours {{ courseNumber }} - Partie {{ partNumber }}</h2>
+  </div>
+
+  <div class="quiz-messages" #messagesContainer>
+    <div *ngFor="let message of messages"
+         class="message"
+         [ngClass]="message.role === 'user' ? 'message-user' : 'message-bot'">
+      <div class="message-icon">
+        {{ message.role === 'user' ? '👤' : '🤖' }}
+      </div>
+      <div class="message-content">
+        <pre class="message-text" [innerHTML]="formatMessageWithVideoLink(message.content)"></pre>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="message message-bot">
+      <div class="message-icon">🤖</div>
+      <div class="message-content">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error-message">
+    ⚠️ {{ errorMessage }}
+  </div>
+
+  <!-- Message de fin de quiz avec recommandation vidéo -->
+  <div *ngIf="quizCompleted && quizScore && quizScore.percentage < 80" class="quiz-result-panel">
+    <div class="result-warning">
+      <h3>⚠️ Score insuffisant</h3>
+      <p class="score-display">{{ quizScore.correct }}/{{ quizScore.total }} ({{ quizScore.percentage }}%)</p>
+      <p class="threshold-message">Le seuil de maîtrise est de 80%.</p>
+
+      <div class="recommendation-box">
+        <h4>📺 Recommandation Immédiate</h4>
+        <p>Nous vous recommandons de regarder la vidéo explicative de ce cours pour mieux comprendre les concepts.</p>
+        <button class="video-btn" (click)="openCourseVideo()">
+          ▶️ Regarder la vidéo du cours {{ courseNumber }}.{{ partNumber }}
+        </button>
+      </div>
+
+      <div class="recommendation-box" style="margin-top: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none;">
+        <h4 style="color: white;">🎯 Recommandations IA Personnalisées</h4>
+        <p style="color: white;">Découvrez les cours prioritaires calculés par notre système GCN basé sur votre profil et vos résultats.</p>
+        <button class="video-btn" (click)="goToRecommendations()" style="background: white; color: #667eea;">
+          🚀 Voir mes recommandations personnalisées
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="quiz-input-container">
+    <textarea
+      [(ngModel)]="userInput"
+      (keypress)="onKeyPress($event)"
+      placeholder="Entrez votre réponse ici... (Appuyez sur Entrée pour envoyer)"
+      class="quiz-input"
+      rows="2"
+      [disabled]="isLoading"></textarea>
+    <button
+      (click)="sendAnswer()"
+      [disabled]="!userInput.trim() || isLoading"
+      class="submit-button">
+      <span *ngIf="!isLoading">Envoyer ➤</span>
+      <span *ngIf="isLoading">Envoi...</span>
+    </button>
+    <button
+      (click)="restartQuiz()"
+      class="restart-button"
+      title="Recommencer le quiz">
+      🔄
+    </button>
+  </div>
+</div>

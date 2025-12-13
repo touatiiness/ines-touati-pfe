@@ -1,0 +1,95 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: pfe-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: anosdb
+      MYSQL_USER: ${DB_USER:-pfeuser}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-pfepassword}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./backend/back-spring/create_anosdb.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    networks:
+      - pfe-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-rootpassword}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+  # Spring Boot Backend
+  backend-spring:
+    build:
+      context: ./backend/back-spring
+      dockerfile: Dockerfile
+    container_name: pfe-backend-spring
+    restart: unless-stopped
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/anosdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: ${DB_USER:-pfeuser}
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-pfepassword}
+      JWT_SECRET: ${JWT_SECRET:-VotreClefSecreteProduction123456789}
+      JWT_EXPIRATION_MS: 86400000
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - pfe-network
+    volumes:
+      - ./backend/back-spring/logs:/app/logs
+
+  # Python FastAPI Backend
+  backend-python:
+    build:
+      context: ./backend/back-python
+      dockerfile: Dockerfile
+    container_name: pfe-backend-python
+    restart: unless-stopped
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "8001:8001"
+    networks:
+      - pfe-network
+    volumes:
+      - ./backend/back-python/Support_Cours_Préparation:/app/Support_Cours_Préparation:ro
+      - ./backend/back-python/students_profiles.json:/app/students_profiles.json
+      - ./backend/back-python/quiz_results.json:/app/quiz_results.json
+      - ./backend/back-python/enriched_graph.json:/app/enriched_graph.json
+      - ./backend/back-python/graph_data.json:/app/graph_data.json
+      - ./backend/back-python/forward_recommendation_paths.json:/app/forward_recommendation_paths.json
+
+  # Angular Frontend with Nginx
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: pfe-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend-spring
+      - backend-python
+    networks:
+      - pfe-network
+
+networks:
+  pfe-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local

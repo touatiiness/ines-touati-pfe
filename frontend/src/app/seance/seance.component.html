@@ -1,0 +1,147 @@
+<main class="main">
+  <!-- Section des 8 boutons de cours -->
+  <section class="courses-buttons-section" *ngIf="!selectedCourse && !showAIAssistant">
+    <div class="container">
+      <div class="header-section">
+        <h1 class="section-title">Mes Cours</h1>
+        <p class="section-subtitle">Sélectionnez le cours que vous souhaitez consulter</p>
+      </div>
+
+      <!-- Bouton AI Assistant Global -->
+      <div class="global-ai-button-container">
+        <button class="global-ai-btn" (click)="openGlobalAI()">
+          <div class="ai-icon">🤖</div>
+          <div class="ai-content">
+            <h3>AI Assistant Global</h3>
+            <p>Posez vos questions sur tous les cours</p>
+          </div>
+          <div class="ai-arrow">💬</div>
+        </button>
+      </div>
+
+      <div class="courses-grid">
+        <button class="course-btn"
+                [ngClass]="'course-' + ((i % 5) + 1)"
+                (click)="selectCourse(i)"
+                *ngFor="let i of [1,2,3,4,5,6,7,8]">
+          <div class="course-number">{{ i < 10 ? '0' + i : i }}</div>
+          <h3>Cours {{ i }}</h3>
+          <p class="course-description">{{ coursesConfig[i]?.title || 'Cours ' + i }}</p>
+          <div class="course-arrow">→</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section des parties (pour tous les cours) -->
+  <section class="parts-section" *ngIf="selectedCourse && !selectedPart">
+    <div class="container">
+      <div class="header-section">
+        <button class="back-btn" (click)="goBack()">← Retour</button>
+        <h1 class="section-title">Cours {{ selectedCourse }}</h1>
+        <p class="section-subtitle">{{ coursesConfig[selectedCourse]?.title }}</p>
+      </div>
+
+      <div class="parts-grid">
+        <!-- Affichage dynamique des parties avec leurs titres -->
+        <button class="part-btn"
+                (click)="selectPart(part.number)"
+                *ngFor="let part of coursesConfig[selectedCourse]?.parts">
+          <div class="part-number">{{ selectedCourse }}.{{ part.number }}</div>
+          <h4 class="part-title">{{ part.title }}</h4>
+          <div class="part-arrow">→</div>
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Section des 2 options (Cours, Quiz) - SANS AI Assistant -->
+  <section class="options-section" *ngIf="selectedCourse && selectedPart">
+    <div class="container">
+      <div class="header-section">
+        <button class="back-btn" (click)="goBackToParts()">← Retour aux parties</button>
+        <h1 class="section-title">Cours {{ selectedCourse }} - Part {{ selectedPart }}</h1>
+        <p class="section-subtitle">Choisissez une option</p>
+      </div>
+
+      <div class="options-grid">
+        <button class="option-btn option-cours" (click)="goToCours()">
+          <div class="option-icon">📚</div>
+          <h3>Cours</h3>
+          <p>Accéder au contenu du cours</p>
+        </button>
+
+        <button class="option-btn option-quiz" (click)="goToQuiz()">
+          <div class="option-icon">📝</div>
+          <h3>Quiz</h3>
+          <p>Tester vos connaissances</p>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section AI Assistant Global -->
+  <section class="ai-assistant-section" *ngIf="showAIAssistant">
+    <div class="container">
+      <div class="header-section">
+        <button class="back-btn" (click)="closeGlobalAI()">← Retour aux cours</button>
+        <h1 class="section-title">🤖 AI Assistant Global</h1>
+        <p class="section-subtitle">Posez vos questions sur tous les cours</p>
+      </div>
+
+      <!-- Intégrer le composant AI Assistant -->
+      <app-ai-assistant [globalMode]="true"></app-ai-assistant>
+    </div>
+  </section>
+
+  <!-- Section des cours existants (si besoin) -->
+  <section *ngIf="showCoursesList && profil=='Enseignant'" id="courses" class="courses section">
+    <div class="container">
+      <a type="button" [routerLink]="'../AjoutCours'" class="btn btn-danger mb-4">Ajouter Cours</a>
+      <div class="row">
+        <div *ngFor="let s of allseance" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div class="course-item">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,'+s.image)" class="img-fluid img-course" alt="...">
+            <div class="course-content">
+              <h3><a [routerLink]="['../fichier',{id:s.id}]">{{s.lien}}</a></h3>
+              <p class="description">{{s.description}}</p>
+              <div class="trainer d-flex justify-content-between align-items-center">
+                <div class="trainer-profile d-flex align-items-center">
+                  <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  {{s.enseignant.nom}} {{s.enseignant.prenom}}
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{s.enseignant.email}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section *ngIf="showCoursesList && profil=='Etudiant'" id="courses" class="courses section">
+    <div class="container">
+      <div class="row">
+        <div *ngFor="let s of allseances" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+          <div class="course-item">
+            <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,'+s.image)" class="img-fluid img-course" alt="...">
+            <div class="course-content">
+              <h3><a [routerLink]="['../fichier',{id:s.id}]">{{s.lien}}</a></h3>
+              <p class="description">{{s.description}}</p>
+              <div class="trainer d-flex justify-content-between align-items-center">
+                <div class="trainer-profile d-flex align-items-center">
+                  <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt=""> &nbsp;&nbsp;&nbsp;&nbsp;
+                  {{s.enseignant.nom}} {{s.enseignant.prenom}}
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;
+                  {{s.enseignant.email}}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

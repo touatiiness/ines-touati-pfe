@@ -1,0 +1,14 @@
+target
+.mvn/wrapper/maven-wrapper.jar
+*.log
+.git
+.gitignore
+README.md
+.idea
+*.iml
+.vscode
+.DS_Store
+.classpath
+.project
+.settings
+bin

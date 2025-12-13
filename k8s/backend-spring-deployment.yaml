@@ -1,0 +1,135 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-spring-secret
+  namespace: pfe-app
+type: Opaque
+stringData:
+  jwt-secret: VotreClefSecreteProductionUltraSecure987654321
+  db-url: jdbc:mysql://mysql:3306/anosdb?useSSL=false&serverTimezone=UTC
+  db-username: pfeuser
+  db-password: pfepassword123
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-spring
+  namespace: pfe-app
+  labels:
+    app: backend-spring
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: http
+  selector:
+    app: backend-spring
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-spring
+  namespace: pfe-app
+  labels:
+    app: backend-spring
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: backend-spring
+  template:
+    metadata:
+      labels:
+        app: backend-spring
+    spec:
+      containers:
+      - name: backend-spring
+        image: ghcr.io/votre-username/pfe-backend-spring:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            secretKeyRef:
+              name: backend-spring-secret
+              key: db-url
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: backend-spring-secret
+              key: db-username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: backend-spring-secret
+              key: db-password
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: backend-spring-secret
+              key: jwt-secret
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-spring-hpa
+  namespace: pfe-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-spring
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

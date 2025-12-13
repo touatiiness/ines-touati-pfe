@@ -1,0 +1,160 @@
+<div class="recommendations-container">
+  <!-- En-tête -->
+  <div class="header">
+    <button class="back-button" (click)="goBackToOptions()">
+      ← Retour
+    </button>
+    <h2>🎯 Recommandations Personnalisées</h2>
+    <p class="subtitle">Basées sur vos résultats de quiz et l'IA</p>
+  </div>
+
+  <!-- Chargement -->
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Analyse de votre profil et génération des recommandations...</p>
+  </div>
+
+  <!-- Erreur -->
+  <div *ngIf="errorMessage" class="error-message">
+    ⚠️ {{ errorMessage }}
+  </div>
+
+  <!-- Contenu principal -->
+  <div *ngIf="!isLoading && !errorMessage && studentProfile" class="content">
+
+    <!-- Profil étudiant -->
+    <div class="profile-card">
+      <h3>📊 Votre Profil</h3>
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-label">Étudiant :</span>
+          <span class="stat-value">{{ studentId }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Quiz complétés :</span>
+          <span class="stat-value">{{ studentProfile.statistics.total_quizzes }}</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Score moyen :</span>
+          <span class="stat-value" [style.color]="recommendationService.getScoreColor(studentProfile.statistics.average_percentage)">
+            {{ studentProfile.statistics.average_percentage.toFixed(1) }}%
+          </span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Taux de réussite :</span>
+          <span class="stat-value">{{ studentProfile.statistics.mastery_rate.toFixed(1) }}%</span>
+        </div>
+      </div>
+
+      <!-- Barre de progression -->
+      <div class="progress-section">
+        <div class="progress-label">
+          Progression globale : {{ getProgressPercentage().toFixed(0) }}%
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="getProgressPercentage()"></div>
+        </div>
+        <div class="progress-info">
+          {{ 39 - studentProfile.total_non_mastered }} / 39 cours maîtrisés
+        </div>
+      </div>
+
+      <!-- Cours à améliorer -->
+      <div *ngIf="studentProfile.total_non_mastered > 0" class="non-mastered-section">
+        <h4>⚠️ Cours à améliorer ({{ studentProfile.total_non_mastered }})</h4>
+        <div class="non-mastered-list">
+          <span *ngFor="let skill of studentProfile.sous_acquis" class="skill-badge">
+            {{ skill }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Félicitations si tout est maîtrisé -->
+      <div *ngIf="studentProfile.total_non_mastered === 0" class="success-message">
+        🎉 Félicitations ! Vous avez maîtrisé tous les cours disponibles !
+      </div>
+    </div>
+
+    <!-- Recommandations -->
+    <div class="recommendations-section">
+      <h3>🚀 Cours Recommandés Pour Vous</h3>
+
+      <div *ngIf="recommendations.length === 0" class="no-recommendations">
+        <p>Aucune recommandation disponible pour le moment.</p>
+        <p class="hint">Complétez d'abord quelques quiz pour obtenir des recommandations personnalisées.</p>
+      </div>
+
+      <div *ngIf="recommendations.length > 0" class="recommendations-list">
+        <div *ngFor="let rec of recommendations; let i = index"
+             class="recommendation-card"
+             (click)="goToCourse(rec.lesson_id)">
+
+          <!-- Badge de rang -->
+          <div class="rank-badge">{{ i + 1 }}</div>
+
+          <!-- Contenu principal -->
+          <div class="rec-content">
+            <div class="rec-header">
+              <h4>{{ rec.lesson_name }}</h4>
+              <span class="course-id">Cours {{ rec.lesson_id }}</span>
+            </div>
+
+            <!-- Score de priorité -->
+            <div class="priority-section">
+              <div class="priority-label">Priorité :</div>
+              <div class="priority-value">
+                {{ getPriorityStars(rec.priority_score) }}
+                <span class="priority-number">({{ (rec.priority_score * 100).toFixed(0) }}%)</span>
+              </div>
+            </div>
+
+            <!-- Niveau Bloom -->
+            <div class="bloom-section">
+              <span class="bloom-label">Difficulté cognitive :</span>
+              <span class="bloom-value">
+                {{ getBloomDescription(rec.bloom_level) }}
+              </span>
+            </div>
+
+            <!-- Prérequis -->
+            <div *ngIf="rec.prerequisites && rec.prerequisites.length > 0" class="prerequisites-section">
+              <span class="prereq-label">Prérequis :</span>
+              <span *ngFor="let prereq of rec.prerequisites" class="prereq-badge">
+                {{ prereq }}
+              </span>
+            </div>
+
+            <!-- Indicateurs de difficulté -->
+            <div class="difficulty-indicators">
+              <div class="indicator"
+                   [ngClass]="getDifficultyClass(rec.difficulty_indicators.struggling_students)">
+                <span class="indicator-icon">👥</span>
+                <span class="indicator-text">
+                  {{ rec.difficulty_indicators.struggling_students }} étudiants en difficulté
+                </span>
+              </div>
+            </div>
+
+            <!-- Bouton d'action -->
+            <div class="action-section">
+              <button class="start-button">
+                Commencer ce cours →
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Conseils -->
+    <div class="tips-section">
+      <h3>💡 Conseils</h3>
+      <ul>
+        <li>Concentrez-vous sur les cours avec la priorité la plus élevée ⭐⭐⭐⭐⭐</li>
+        <li>Assurez-vous d'avoir maîtrisé les prérequis avant de commencer</li>
+        <li>Les cours avec beaucoup d'étudiants en difficulté nécessitent plus d'attention</li>
+        <li>Visez un score de 80% minimum pour valider un cours</li>
+      </ul>
+    </div>
+  </div>
+</div>

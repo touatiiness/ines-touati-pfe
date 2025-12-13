@@ -1,0 +1,139 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: backend-python-secret
+  namespace: pfe-app
+type: Opaque
+stringData:
+  openai-api-key: sk-votre-clef-openai-ici
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: backend-python-config
+  namespace: pfe-app
+data:
+  HOST: "0.0.0.0"
+  PORT: "8001"
+  SPRING_BACKEND_URL: "http://backend-spring:8080"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-python
+  namespace: pfe-app
+  labels:
+    app: backend-python
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8001
+      targetPort: 8001
+      protocol: TCP
+      name: http
+  selector:
+    app: backend-python
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-python
+  namespace: pfe-app
+  labels:
+    app: backend-python
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: backend-python
+  template:
+    metadata:
+      labels:
+        app: backend-python
+    spec:
+      containers:
+      - name: backend-python
+        image: ghcr.io/votre-username/pfe-backend-python:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8001
+          name: http
+        env:
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: backend-python-secret
+              key: openai-api-key
+        - name: HOST
+          valueFrom:
+            configMapKeyRef:
+              name: backend-python-config
+              key: HOST
+        - name: PORT
+          valueFrom:
+            configMapKeyRef:
+              name: backend-python-config
+              key: PORT
+        - name: SPRING_BACKEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: backend-python-config
+              key: SPRING_BACKEND_URL
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8001
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-python-hpa
+  namespace: pfe-app
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: backend-python
+  minReplicas: 2
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

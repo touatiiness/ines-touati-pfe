@@ -1,0 +1,314 @@
+{
+    "1.1": {
+        "name": "Lister les étapes pour passer d'un code source à un exécutable",
+        "in_degree": 1,
+        "out_degree": 0,
+        "struggling_students": 0,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "1.2": {
+        "name": "Décrire la structure d'un programme C",
+        "in_degree": 2,
+        "out_degree": 0,
+        "struggling_students": 7,
+        "bloom_level": 2,
+        "bloom_norm": 0.4
+    },
+    "1.3": {
+        "name": "Utiliser les variables",
+        "in_degree": 5,
+        "out_degree": 0,
+        "struggling_students": 5,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "1.4": {
+        "name": "Examiner la portée d'une variable",
+        "in_degree": 0,
+        "out_degree": 0,
+        "struggling_students": 6,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "1.5": {
+        "name": "Pratiquer les fonctions d'entrées / sorties",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 12,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "1.6": {
+        "name": "Utiliser les opérateurs arithmétiques et logiques",
+        "in_degree": 7,
+        "out_degree": 1,
+        "struggling_students": 5,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "1.7": {
+        "name": "Ordonner les opérateurs arithmétiques et logiques",
+        "in_degree": 0,
+        "out_degree": 1,
+        "struggling_students": 10,
+        "bloom_level": 5,
+        "bloom_norm": 1.0
+    },
+    "2.1": {
+        "name": "Reconnaître la structure if else",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 6,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "2.2": {
+        "name": "Reconnaître la structures switch",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 8,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "2.3": {
+        "name": "Distinguer les structures conditionnelles ( if, if else et switch ) du langage C",
+        "in_degree": 3,
+        "out_degree": 2,
+        "struggling_students": 5,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "3.1": {
+        "name": "Reconnaître la boucle for",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 7,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "3.2": {
+        "name": "Reconnaître la boucle do while",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 8,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "3.3": {
+        "name": "Reconnaître la boucle while",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 9,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "3.4": {
+        "name": "Différencier les structures itératives",
+        "in_degree": 3,
+        "out_degree": 3,
+        "struggling_students": 5,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "4.1": {
+        "name": "Définir un tableau",
+        "in_degree": 7,
+        "out_degree": 1,
+        "struggling_students": 10,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "4.2": {
+        "name": "Pratiquer l'opération d'ajout",
+        "in_degree": 0,
+        "out_degree": 3,
+        "struggling_students": 2,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "4.3": {
+        "name": "Pratiquer l'opération de suppression",
+        "in_degree": 0,
+        "out_degree": 3,
+        "struggling_students": 8,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "4.4": {
+        "name": "Pratiquer l'opération de parcours",
+        "in_degree": 2,
+        "out_degree": 3,
+        "struggling_students": 9,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "4.5": {
+        "name": "Appliquer la recherche séquentielle",
+        "in_degree": 2,
+        "out_degree": 1,
+        "struggling_students": 10,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "4.6": {
+        "name": "Ordonner un tableau",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 8,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "4.7": {
+        "name": "Appliquer la recherche dichotomique",
+        "in_degree": 0,
+        "out_degree": 1,
+        "struggling_students": 8,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "4.8": {
+        "name": "Identifier les types des tableaux",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 4,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "4.9": {
+        "name": "Appliquer une structure itérative pour le parcours d'un tableau bidimentionnel",
+        "in_degree": 0,
+        "out_degree": 2,
+        "struggling_students": 7,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "5.1": {
+        "name": "Définir une chaîne de caractères",
+        "in_degree": 3,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "5.2": {
+        "name": "Utiliser les fonctions prédéfinies de String.h",
+        "in_degree": 0,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "5.3": {
+        "name": "Unknown",
+        "in_degree": 1,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "5.4": {
+        "name": "Unknown",
+        "in_degree": 0,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "6.1": {
+        "name": "Définir une structure avec des champs",
+        "in_degree": 1,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "6.2": {
+        "name": "Utiliser une variable de type structure",
+        "in_degree": 1,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "6.3": {
+        "name": "Définir un alias sur une structure via typedef",
+        "in_degree": 0,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "7.1": {
+        "name": "Définir une fonction",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "7.2": {
+        "name": "Identifier les composantes d'une fonction",
+        "in_degree": 2,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "7.3": {
+        "name": "Distinguer les modes de passage des paramètres d'une fonction",
+        "in_degree": 0,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "8.1": {
+        "name": "Définir un pointeur",
+        "in_degree": 0,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 1,
+        "bloom_norm": 0.2
+    },
+    "8.2": {
+        "name": "Utiliser les pointeurs dans les prototypes des fonctions",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "8.3": {
+        "name": "Appliquer les pointeurs pour la manipulation des tableaux",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    },
+    "8.4": {
+        "name": "…",
+        "in_degree": 1,
+        "out_degree": 1,
+        "struggling_students": 0,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "8.5": {
+        "name": "…",
+        "in_degree": 1,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 4,
+        "bloom_norm": 0.8
+    },
+    "8.6": {
+        "name": "…",
+        "in_degree": 0,
+        "out_degree": 2,
+        "struggling_students": 0,
+        "bloom_level": 3,
+        "bloom_norm": 0.6
+    }
+}

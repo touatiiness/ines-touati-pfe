@@ -1,0 +1,445 @@
+.recommendations-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* En-tête */
+.header {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: background 0.3s;
+}
+
+.back-button:hover {
+  background: #5568d3;
+}
+
+.header h2 {
+  margin: 10px 0;
+  color: #333;
+  font-size: 28px;
+}
+
+.subtitle {
+  color: #666;
+  margin: 5px 0 0 0;
+  font-size: 14px;
+}
+
+/* Chargement */
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.spinner {
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Erreur */
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  padding: 15px 20px;
+  border-radius: 5px;
+  border-left: 4px solid #c62828;
+  margin-bottom: 20px;
+}
+
+/* Profil étudiant */
+.profile-card {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-card h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Barre de progression */
+.progress-section {
+  margin: 20px 0;
+}
+
+.progress-label {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 25px;
+  background: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  transition: width 0.5s ease;
+}
+
+.progress-info {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+
+/* Cours non maîtrisés */
+.non-mastered-section {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.non-mastered-section h4 {
+  margin: 0 0 15px 0;
+  color: #ff6b6b;
+  font-size: 16px;
+}
+
+.non-mastered-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.skill-badge {
+  background: #ffebee;
+  color: #c62828;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Message de succès */
+.success-message {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+/* Section recommandations */
+.recommendations-section {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recommendations-section h3 {
+  margin: 0 0 20px 0;
+  color: #333;
+  font-size: 20px;
+}
+
+/* Pas de recommandations */
+.no-recommendations {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
+}
+
+.no-recommendations .hint {
+  font-size: 14px;
+  color: #999;
+  margin-top: 10px;
+}
+
+/* Liste de recommandations */
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Carte de recommandation */
+.recommendation-card {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 25px;
+  padding-left: 70px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.recommendation-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* Badge de rang */
+.rank-badge {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  border: 3px solid white;
+}
+
+/* Contenu recommandation */
+.rec-content {
+  color: white;
+}
+
+.rec-header {
+  margin-bottom: 15px;
+}
+
+.rec-header h4 {
+  margin: 0 0 5px 0;
+  font-size: 20px;
+  color: white;
+}
+
+.course-id {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+/* Priorité */
+.priority-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.priority-label {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.priority-value {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+}
+
+.priority-number {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Bloom */
+.bloom-section {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.bloom-label {
+  opacity: 0.9;
+  margin-right: 8px;
+}
+
+.bloom-value {
+  font-weight: 500;
+}
+
+/* Prérequis */
+.prerequisites-section {
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.prereq-label {
+  opacity: 0.9;
+  margin-right: 8px;
+}
+
+.prereq-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+/* Indicateurs de difficulté */
+.difficulty-indicators {
+  margin: 15px 0;
+}
+
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.indicator.easy {
+  background: rgba(76, 175, 80, 0.3);
+}
+
+.indicator.moderate {
+  background: rgba(255, 193, 7, 0.3);
+}
+
+.indicator.difficult {
+  background: rgba(255, 152, 0, 0.3);
+}
+
+.indicator.very-difficult {
+  background: rgba(244, 67, 54, 0.3);
+}
+
+.indicator-icon {
+  font-size: 16px;
+}
+
+/* Bouton d'action */
+.action-section {
+  margin-top: 15px;
+}
+
+.start-button {
+  background: white;
+  color: #667eea;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Conseils */
+.tips-section {
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tips-section h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.tips-section ul {
+  margin: 0;
+  padding-left: 25px;
+  color: #666;
+  line-height: 1.8;
+}
+
+.tips-section li {
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recommendations-container {
+    padding: 10px;
+  }
+
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .recommendation-card {
+    padding-left: 25px;
+    padding-top: 60px;
+  }
+
+  .rank-badge {
+    left: 50%;
+    top: 15px;
+    transform: translateX(-50%);
+  }
+}

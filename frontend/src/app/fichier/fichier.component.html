@@ -1,0 +1,30 @@
+<a type="button"[routerLink]="['../ajouterfichier',{id:this.id}]" class="btn btn-danger">Ajouter fichier</a>
+
+  
+<main class="main">
+
+
+    <!-- Courses Section -->
+    <section id="courses" class="courses section">
+  
+      <div class="container">
+  
+        <div class="row">
+  
+          <div *ngFor="let s of allfichiher" class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="course-item">
+              <img [src]="sanitizer.bypassSecurityTrustUrl('data:image/jpg;base64,'+s.image)" class="img-fluid img-course" alt="...">
+              <div class="course-content">
+            
+                <h3><a (click)="loadpdf(s.id)" >{{s.name}}</a></h3>
+                </div>
+            </div>
+          </div> <!-- End Course Item-->
+  
+        </div>
+  
+      </div>
+  
+    </section><!-- /Courses Section -->
+  <!-- <app-chat></app-chat> -->
+  </main>
