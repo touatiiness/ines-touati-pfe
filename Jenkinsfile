@@ -4,7 +4,7 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        IMAGE_PREFIX = 'iness8'  //
+        IMAGE_PREFIX = 'iness8'  
     }
 
     stages {
