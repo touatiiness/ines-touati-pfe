@@ -4,15 +4,18 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'docker.io'
         DOCKER_CREDENTIALS_ID = 'dockerhub-credentials'
-        IMAGE_PREFIX = 'mo35ehab'  // À remplacer par votre username Docker Hub
-        GIT_COMMIT_SHORT = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+        IMAGE_PREFIX = 'mo35ehab'  // استبدل باسم المستخدم في Docker Hub
     }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
-                echo "✓ Code checked out - Commit: ${GIT_COMMIT_SHORT}"
+                script {
+                    // استخراج commit short بعد ما يكون الكود موجود
+                    env.GIT_COMMIT_SHORT = bat(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+                    echo "✓ Code checked out - Commit: ${env.GIT_COMMIT_SHORT}"
+                }
             }
         }
 
@@ -23,8 +26,8 @@ pipeline {
                         dir('frontend') {
                             script {
                                 echo '🔨 Building Angular Frontend...'
-                                sh "docker build -t ${IMAGE_PREFIX}/pfe-frontend:${GIT_COMMIT_SHORT} ."
-                        sh "docker tag ${IMAGE_PREFIX}/pfe-frontend:${GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-frontend:latest"
+                                bat "docker build -t ${IMAGE_PREFIX}/pfe-frontend:${env.GIT_COMMIT_SHORT} ."
+                                bat "docker tag ${IMAGE_PREFIX}/pfe-frontend:${env.GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-frontend:latest"
                             }
                         }
                     }
@@ -35,8 +38,8 @@ pipeline {
                         dir('backend/back-spring') {
                             script {
                                 echo '🔨 Building Spring Boot Backend...'
-                                sh "docker build -t ${IMAGE_PREFIX}/pfe-backend-spring:${GIT_COMMIT_SHORT} ."
-                                sh "docker tag ${IMAGE_PREFIX}/pfe-backend-spring:${GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-backend-spring:latest"
+                                bat "docker build -t ${IMAGE_PREFIX}/pfe-backend-spring:${env.GIT_COMMIT_SHORT} ."
+                                bat "docker tag ${IMAGE_PREFIX}/pfe-backend-spring:${env.GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-backend-spring:latest"
                             }
                         }
                     }
@@ -47,8 +50,8 @@ pipeline {
                         dir('backend/back-python') {
                             script {
                                 echo '🔨 Building Python FastAPI Backend...'
-                                sh "docker build -t ${IMAGE_PREFIX}/pfe-backend-python:${GIT_COMMIT_SHORT} ."
-                                sh "docker tag ${IMAGE_PREFIX}/pfe-backend-python:${GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-backend-python:latest"
+                                bat "docker build -t ${IMAGE_PREFIX}/pfe-backend-python:${env.GIT_COMMIT_SHORT} ."
+                                bat "docker tag ${IMAGE_PREFIX}/pfe-backend-python:${env.GIT_COMMIT_SHORT} ${IMAGE_PREFIX}/pfe-backend-python:latest"
                             }
                         }
                     }
@@ -61,7 +64,7 @@ pipeline {
                 stage('Test Frontend') {
                     steps {
                         echo '🧪 Testing Frontend...'
-                        // sh 'cd frontend && npm test -- --watch=false --browsers=ChromeHeadless'
+                        // bat 'cd frontend && npm test -- --watch=false --browsers=ChromeHeadless'
                         echo '✓ Frontend tests passed'
                     }
                 }
@@ -69,7 +72,7 @@ pipeline {
                 stage('Test Spring Boot') {
                     steps {
                         echo '🧪 Testing Spring Boot...'
-                        // sh 'cd backend/back-spring && ./mvnw test'
+                        // bat 'cd backend/back-spring && ./mvnw test'
                         echo '✓ Spring Boot tests passed'
                     }
                 }
@@ -77,7 +80,7 @@ pipeline {
                 stage('Test Python') {
                     steps {
                         echo '🧪 Testing Python...'
-                        // sh 'cd backend/back-python && pytest tests/'
+                        // bat 'cd backend/back-python && pytest tests/'
                         echo '✓ Python tests passed'
                     }
                 }
@@ -87,10 +90,10 @@ pipeline {
         stage('Security Scan') {
             steps {
                 echo '🔒 Running Security Scans...'
-                sh """
-                    docker run --rm \
-                      -v /var/run/docker.sock:/var/run/docker.sock \
-                      aquasec/trivy image ${IMAGE_PREFIX}/pfe-frontend:${GIT_COMMIT_SHORT} || true
+                bat """
+                    docker run --rm ^
+                      -v //var/run/docker.sock://var/run/docker.sock ^
+                      aquasec/trivy image ${IMAGE_PREFIX}/pfe-frontend:${env.GIT_COMMIT_SHORT} || exit 0
                 """
                 echo '✓ Security scan completed'
             }
@@ -107,14 +110,14 @@ pipeline {
                 script {
                     echo '📤 Pushing images to Docker Hub...'
                     docker.withRegistry('https://registry.hub.docker.com', DOCKER_CREDENTIALS_ID) {
-                        sh "docker push ${IMAGE_PREFIX}/pfe-frontend:${GIT_COMMIT_SHORT}"
-                        sh "docker push ${IMAGE_PREFIX}/pfe-frontend:latest"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-frontend:${env.GIT_COMMIT_SHORT}"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-frontend:latest"
 
-                        sh "docker push ${IMAGE_PREFIX}/pfe-backend-spring:${GIT_COMMIT_SHORT}"
-                        sh "docker push ${IMAGE_PREFIX}/pfe-backend-spring:latest"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-backend-spring:${env.GIT_COMMIT_SHORT}"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-backend-spring:latest"
 
-                        sh "docker push ${IMAGE_PREFIX}/pfe-backend-python:${GIT_COMMIT_SHORT}"
-                        sh "docker push ${IMAGE_PREFIX}/pfe-backend-python:latest"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-backend-python:${env.GIT_COMMIT_SHORT}"
+                        bat "docker push ${IMAGE_PREFIX}/pfe-backend-python:latest"
                     }
                     echo '✓ Images pushed successfully'
                 }
@@ -127,7 +130,7 @@ pipeline {
             }
             steps {
                 echo '🚀 Deploying to Staging Environment...'
-                sh 'docker-compose -f docker-compose.yml up -d'
+                bat 'docker-compose -f docker-compose.yml up -d'
                 echo '✓ Deployed to staging'
             }
         }
@@ -139,7 +142,7 @@ pipeline {
             steps {
                 input message: '🚀 Deploy to Production?', ok: 'Deploy'
                 echo '🚀 Deploying to Production Environment...'
-                sh 'docker-compose -f docker-compose.yml up -d'
+                bat 'docker-compose -f docker-compose.yml up -d'
                 echo '✓ Deployed to production'
             }
         }
@@ -148,7 +151,7 @@ pipeline {
     post {
         always {
             echo '🧹 Cleaning up...'
-            sh 'docker system prune -f || true'
+            bat 'docker system prune -f || exit 0'
         }
         success {
             echo '✅ Pipeline succeeded!'
